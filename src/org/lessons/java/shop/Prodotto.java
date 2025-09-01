@@ -48,4 +48,9 @@ public class Prodotto {
         System.out.println("il prezzo finale dell'articolo " + nome + " è " + String.format("%.2f$", (prezzo + iva))
                 + " di cui IVA " + String.format("%.2f$", iva));
     }
+
+    // replaceAll per far sembrare coearente la scelta del trattino
+    public void stampaNomeEsteso() {
+        System.out.println("Il nome esteso dell'articolo è: " + codice + "-" + nome.replaceAll("\\s+", "-"));
+    }
 }
