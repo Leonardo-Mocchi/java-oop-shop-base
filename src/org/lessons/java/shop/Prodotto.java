@@ -1,16 +1,17 @@
 package org.lessons.java.shop;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Prodotto {
     public int codice;
     public String nome;
     public String descrizione;
-    public float prezzo;
+    public BigDecimal prezzo;
     public boolean primaNecessita;
-    public float iva;
+    public BigDecimal iva;
 
-    Prodotto(String nome, String descrizione, float prezzo, boolean primaNecessita) {
+    Prodotto(String nome, String descrizione, BigDecimal prezzo, boolean primaNecessita) {
         this.codice = assegnaNumeroProdotto();
         this.nome = nome;
         this.descrizione = descrizione;
@@ -20,18 +21,29 @@ public class Prodotto {
     }
 
     // utility methods
-    public float calcolaIva() {
-        if (primaNecessita) {
-            return iva = (prezzo / 100) * 5;
-        } else {
-            return iva = (prezzo / 100) * 22;
+    /*
+     * // ! BigDecimal non accetta calcoli come al solito, ma solo con metodi
+     * public float calcolaIva() {
+     * if (primaNecessita) {
+     * return iva = (prezzo / 100) * 5;
+     * } else {
+     * return iva = (prezzo / 100) * 22;
+     * }
+     * }
+     */
+
+    public BigDecimal calcolaIva() {
+        if (prezzo != null && iva != null) {
+            BigDecimal percentuale = primaNecessita ? new BigDecimal("5") : new BigDecimal("22");
+            BigDecimal cento = new BigDecimal("100");
+            return prezzo.multiply(percentuale).divide(cento);
         }
+        return null;
     }
 
     public int assegnaNumeroProdotto() {
         Random rand = new Random();
-        int max = 999999999;
-        int result = rand.nextInt(max);
+        int result = rand.nextInt(999999999);
         return result;
     }
 
@@ -45,7 +57,7 @@ public class Prodotto {
     }
 
     public void stampaPrezzoPieno() {
-        System.out.println("il prezzo finale dell'articolo " + nome + " è " + String.format("%.2f$", (prezzo + iva))
+        System.out.println("il prezzo finale dell'articolo " + nome + " è " + String.format("%.2f$", prezzo.add(iva))
                 + " di cui IVA " + String.format("%.2f$", iva));
     }
 
