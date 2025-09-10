@@ -1,45 +1,41 @@
-package org.lessons.java.shop;
+package org.lessons.java.shop2;
 
 import java.math.BigDecimal;
 import java.util.Random;
 
 public class Prodotto {
 
-  public int codice;
+  private int codice;
   public String nome;
-  public String descrizione;
+  public String marca;
   public BigDecimal prezzo;
   public boolean primaNecessita;
   public BigDecimal iva;
 
+  //* Constructors
   Prodotto(
     String nome,
-    String descrizione,
+    String marca,
     BigDecimal prezzo,
     boolean primaNecessita
   ) {
     this.codice = assegnaNumeroProdotto();
     this.nome = nome;
-    this.descrizione = descrizione;
+    this.marca = marca.substring(0, 1).toUpperCase() + marca.substring(1);
     this.prezzo = prezzo;
     this.primaNecessita = primaNecessita;
     this.iva = calcolaIva();
   }
 
-  // utility methods
-  /*
-   * // ! BigDecimal non accetta calcoli come al solito, ma solo con metodi
-   * public float calcolaIva() {
-   * if (primaNecessita) {
-   * return iva = (prezzo / 100) * 5;
-   * } else {
-   * return iva = (prezzo / 100) * 22;
-   * }
-   * }
-   */
+  Prodotto() {
+    this.codice = assegnaNumeroProdotto();
+    this.primaNecessita = false;
+  }
 
-  public BigDecimal calcolaIva() {
-    if (prezzo != null && iva != null) {
+  //* utility methods
+
+  private BigDecimal calcolaIva() {
+    if (prezzo != null) {
       BigDecimal percentuale = primaNecessita
         ? new BigDecimal("5")
         : new BigDecimal("22");
@@ -49,18 +45,18 @@ public class Prodotto {
     return null;
   }
 
-  public int assegnaNumeroProdotto() {
+  private int assegnaNumeroProdotto() {
     Random rand = new Random();
     int result = rand.nextInt(999999999);
     return result;
   }
 
-  // display methods
-  public void stampaCodice() {
+  //* Getters
+  public void getCodice() {
     System.out.println("Il codice del prodotto " + nome + " è " + codice);
   }
 
-  public void stampaPrezzo() {
+  public void getPrezzo() {
     System.out.println(
       "Il prezzo base dell'articolo " +
       nome +
@@ -69,7 +65,7 @@ public class Prodotto {
     );
   }
 
-  public void stampaPrezzoPieno() {
+  public void getPrezzoPieno() {
     System.out.println(
       "il prezzo finale dell'articolo " +
       nome +
@@ -81,12 +77,33 @@ public class Prodotto {
   }
 
   // replaceAll per far sembrare coerente la scelta del trattino
-  public void stampaNomeEsteso() {
+  public void getNomeEsteso() {
     System.out.println(
       "Il nome esteso dell'articolo è: " +
       codice +
       "-" +
+      marca +
+      "-" +
       nome.replaceAll("\\s+", "-")
     );
+  }
+
+  //* SETTERS
+  public void setNome(String newNome) {
+    this.nome = newNome;
+  }
+
+  public void setMarca(String newMarca) {
+    this.marca = newMarca;
+  }
+
+  public void setPrezzo(BigDecimal newPrezzo) {
+    this.prezzo = newPrezzo;
+    this.iva = calcolaIva(); // Recalculate IVA when price changes
+  }
+
+  public void setPrimaNecessita(boolean newPrimaNecessita) {
+    this.primaNecessita = newPrimaNecessita;
+    this.iva = calcolaIva();
   }
 }
