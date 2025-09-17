@@ -6,11 +6,11 @@ import java.util.Random;
 public class Prodotto {
 
   private int codice;
-  public String nome;
-  public String marca;
-  public BigDecimal prezzo;
-  public boolean primaNecessita;
-  public BigDecimal iva;
+  private String nome;
+  private String marca;
+  private BigDecimal prezzo;
+  private boolean primaNecessita;
+  private BigDecimal iva;
 
   //* Constructors
   Prodotto(
@@ -52,6 +52,10 @@ public class Prodotto {
   }
 
   //* Getters
+  public void getNome() {
+    System.out.println("Il nome del prodotto è " + nome);
+  }
+
   public void getCodice() {
     System.out.println("Il codice del prodotto " + nome + " è " + codice);
   }
@@ -62,6 +66,12 @@ public class Prodotto {
       nome +
       " è " +
       String.format("%.2f$", prezzo)
+    );
+  }
+
+  public void getIva() {
+    System.out.println(
+      "L'IVA dell'articolo ammonta a  " + String.format("%.2f$", iva)
     );
   }
 
